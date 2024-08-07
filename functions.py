@@ -56,54 +56,41 @@ def C2EulerAngles(C21):
 
     return phi, theta, psi
 
-## rotation matrix to quaternion
-def C2quat(C21):
-    n = np.sqrt(np.trace(C21) + 1) / 2
-    e1 = (C21[1, 2] - C21[2, 1]) / (4 * n)
-    e2 = (C21[2, 0] - C21[0, 2]) / (4 * n)
-    e3 = (C21[0, 1] - C21[1, 0]) / (4 * n)
-    
-    E = np.array([e1, e2, e3, n])
-    
-    return E
+class Quaternion:
+    def __init__(self, e1=0, e2=0, e3=0, n=1):
+        self.e = np.array([e1, e2, e3])
+        self.n = n
 
-## quaternion to rotation matrix
-def quat2C(quat):
-    e = quat[:3]
-    n = quat[3]
-    
-    C21 = (2 * n**2 - 1) * np.eye(3) + (2 * np.outer(e, e)) - (2 * n * aCross(e))
-    
-    return C21
+    @staticmethod
+    def from_rotation_matrix(C21):
+        n = np.sqrt(np.trace(C21) + 1) / 2
+        e1 = (C21[1, 2] - C21[2, 1]) / (4 * n)
+        e2 = (C21[2, 0] - C21[0, 2]) / (4 * n)
+        e3 = (C21[0, 1] - C21[1, 0]) / (4 * n)
+        return Quaternion(e1, e2, e3, n)
 
-## quaternion rates
-def quatRates(quat, omega):
-    d_quat = np.zeros(4)
-    
-    e = quat[:3]
-    n = quat[3]
-    
-    d_quat[:3] = 0.5 * (n * np.eye(3) + aCross(e)) @ omega
-    d_quat[3] = -0.5 * e @ omega
-    
-    return d_quat
+    def to_rotation_matrix(self):
+        e = self.e
+        n = self.n
+        C21 = (2 * n**2 - 1) * np.eye(3) + 2 * np.outer(e, e) - 2 * n * aCross(e)
+        return C21
 
-## quaternion multuplication
-def quatMult(p, q):
-    eS = p[3] * q[:3] + q[3] * p[:3] + aCross(p[:3]) @ q[:3]
-    nS = p[3] * q[3] - np.dot(p[:3], q[:3])
-    
-    s = np.concatenate((eS, [nS]))
-    
-    return s
+    def rates(self, omega):
+        d_quat = Quaternion()
+        d_quat.e = 0.5 * (self.n * np.eye(3) + aCross(self.e)) @ omega
+        d_quat.n = -0.5 * self.e @ omega
+        return d_quat
 
-## quaternion conjugate
-def quatConjugate(q):
-    qStarE = -1 * q[:3]
-    qStarN = q[3]
-    qStar = np.concatenate((qStarE, [qStarN]))
-    
-    return qStar
+    def multiply(self, other):
+        eS = self.n * other.e + other.n * self.e + aCross(self.e) @ other.e
+        nS = self.n * other.n - np.dot(self.e, other.e)
+        return Quaternion(eS[0], eS[1], eS[2], nS)
+
+    def conjugate(self):
+        return Quaternion(-self.e[0], -self.e[1], -self.e[2], self.n)
+
+    def as_array(self):
+        return np.concatenate((self.e, [self.n]))
 
 ## COE from R and V
 import numpy as np
