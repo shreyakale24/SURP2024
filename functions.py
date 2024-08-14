@@ -67,6 +67,7 @@ class Quaternion:
         e1 = (C21[1, 2] - C21[2, 1]) / (4 * n)
         e2 = (C21[2, 0] - C21[0, 2]) / (4 * n)
         e3 = (C21[0, 1] - C21[1, 0]) / (4 * n)
+        sdf = 4
         return Quaternion(e1, e2, e3, n)
 
     def to_rotation_matrix(self):
