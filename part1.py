@@ -114,7 +114,6 @@ q_b_ECI_0 = f.Quaternion.C2quat(C_b_ECI_0)
 w_b_ECI_0 = np.array([0.001, -0.001, 0.002])
 
 def dynamics(t, j, omega):
-    """Compute the derivative of the angular velocity."""
    # omega = y[:3]
    # dq = np.array(f.Quaternion.rates((4))) # Placeholder for quaternion rates
   #  dE = np.zeros(3)  # Placeholder for Euler angle rates

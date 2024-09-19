@@ -127,16 +127,14 @@ q_b_ECI_0 = f.Quaternion.C2quat(C_b_ECI_0)
 w_b_ECI_0 = np.array([0.001, -0.001, 0.002]);
 
 def dynamics(t, y):
-    """Compute the derivative of the angular velocity."""
     omega = y[:3]
-    dq = np.zeros(4)  # Placeholder for quaternion rates
-    dE = np.zeros(3)  # Placeholder for Euler angle rates
+    dq = np.zeros(4)  
+    dE = np.zeros(3)  #
     domega = np.linalg.solve(j, t - f.aCross(omega) @ (J @ omega))
     return np.concatenate((domega, dq, dE))
 
 # Function to compute quaternion derivative
 def quat_derivative(q, w):
-    """Quaternion derivative from angular velocity."""
     q0, q1, q2, q3 = q
     wx, wy, wz = w
     dqdt = 0.5 * np.array([
@@ -149,7 +147,6 @@ def quat_derivative(q, w):
 
 # Euler's rotational equations of motion
 def rotational_dynamics(t, y, J, T):
-    """Rotational dynamics based on Euler's equations."""
     w = y[0:3]     # Angular velocities
     q = y[3:7]     # Quaternions
     
@@ -182,8 +179,9 @@ sol = solve_ivp(rotational_dynamics, t_span, y0, t_eval=t_eval, args=(j, t))
 omegas = sol.y[0:3].T  # Angular velocities (wx, wy, wz)
 quats = sol.y[3:7].T   # Quaternions (q0, q1, q2, q3)
 
-# Placeholder for Euler angles (we'll convert from quaternions)
-eulers = np.zeros((len(t_eval), 3))  # Replace with actual conversion
+#something is wrong! 
+#get euler funtion
+eulers = np.zeros((len(t_eval), 3)) 
 
 # Plotting
 
