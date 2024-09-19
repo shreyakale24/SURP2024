@@ -226,7 +226,9 @@ plt.tight_layout()
 plt.show()
 
 #-------------------------------------------------------------
-
+#FORGOT PART 3 WHOOPS 
+a = 4
+#-------------------------------------------------------------
 # Part 4: Defining new initial conditions
 
 j = j  # Inertia matrix
@@ -237,11 +239,9 @@ T_d = T_c  # Disturbance torque
 E_b_LVLH_0 = f.C2EulerAngles(C_b_LVLH_0)
 q_b_LVLH_0 = f.C2quat(C_b_LVLH_0)
 
-# Placeholder for running simulation and getting data (you would replace this with actual simulation data in Python)
-# For example, simulate using a Python physics engine or manually compute angular velocities, quaternions, and Euler angles.
-# Assume part4out is the output from that simulation, structured similarly to your Simulink outputs.
+#FIGURE OUT SIM :(((((
 
-# Simulated data (Replace with actual simulation outputs)
+# Simulated data ( will replace with actual simulation outputs)
 part4out_tout = np.linspace(0, 100, 100)  # time steps
 w_b_ECI = np.random.rand(100, 3)  # Angular velocities in ECI frame (replace with real data)
 E_b_ECI = np.random.rand(100, 3)  # Euler angles in ECI frame (replace with real data)
@@ -252,7 +252,6 @@ E_b_LVLH = np.random.rand(100, 3)  # Euler angles in LVLH frame (replace with re
 q_b_LVLH = np.random.rand(100, 4)  # Quaternions in LVLH frame (replace with real data)
 
 # Plotting results
-
 # Plot Angular Velocities, Euler Angles, and Quaternions (Body to ECI)
 plt.figure(41)
 
@@ -319,22 +318,17 @@ import matplotlib.pyplot as plt
 # Part 5: Initial conditions and simulation setup
 
 # Gain (experimental)
-k = -0.2  # Could also be a diagonal matrix for different axis gains
+k = -0.2  
 
 # Initial conditions
 w_b_ECI_tumb = np.array([-0.05, 0.03, 0.2])  # Angular velocity in ECI frame
-E_b_ECI_0  # Presumed to be computed from previous sections
-q_b_ECI_0  # Presumed to be computed from previous sections
-
 # Time span based on number of orbits
 n_revs = 5
 tspan = n_revs * orbital_period
 
-# Placeholder for running the simulation (replace with actual simulation data in Python)
-# You would need to run a simulation engine or replace these with actual outputs.
-# Assume part5out is the output from that simulation.
+#FIGURE OUT SIM :(((((
 
-# Simulated data (Replace with actual simulation outputs)
+# Simulated data (will replace with actual simulation outputs)
 part5out_tout = np.linspace(0, tspan, 100)  # time steps
 w_b_ECI = np.random.rand(100, 3)  # Angular velocities in ECI frame (replace with real data)
 q_b_ECI = np.random.rand(100, 4)  # Quaternions in ECI frame (replace with real data)
@@ -396,13 +390,12 @@ import matplotlib.pyplot as plt
 Is_unit = 1.2  # kg/m^2
 It_unit = 0.6  # kg/m^2
 m_wheel = 1  # kg
-J = np.eye(3)  # Original inertia matrix (replace with actual values)
 
 # Orbital period (example value, replace with actual period)
 orbital_period = 5400  # seconds, e.g., for a low Earth orbit
 
 # New total inertia matrix considering the wheels
-Jnew = J + (2*It_unit + Is_unit + 2*m_wheel) * np.eye(3)
+Jnew = j + (2*It_unit + Is_unit + 2*m_wheel) * np.eye(3)
 
 # Inertia of wheels in wheel space
 Is = np.diag([1.2, 1.2, 1.2])
@@ -425,14 +418,16 @@ q_c = np.array([0, 0, 0, 1])  # Commanded quaternion (LVLH to Body)
 # Time span for the first simulation (300 seconds)
 tspan = 300  # seconds
 
-# Placeholder for running the simulation (replace with actual simulation data in Python)
-# Simulated data (Replace with actual simulation outputs)
+#FIGURE OUT SIM :(((((
+
 part6out_tout = np.linspace(0, tspan, 100)  # time steps
-E_b_ECI = np.random.rand(100, 3)  # Euler angles (replace with real data)
-q_b_ECI = np.random.rand(100, 4)  # Quaternions (replace with real data)
-w_b_ECI = np.random.rand(100, 3)  # Angular velocities (replace with real data)
-Mc = np.random.rand(100, 3)  # Control moments (replace with real data)
-OMEGA = np.random.rand(100, 3)  # Wheel speeds (replace with real data)
+
+
+'''E_b_ECI = 
+q_b_ECI =
+w_b_ECI = 
+Mc = 
+Omega = ''' 
 
 # Body to ECI plots (First 300 seconds)
 
@@ -521,14 +516,14 @@ plt.show()
 # Extended simulation for 5 orbits
 tspan2 = 5 * orbital_period  # time span for five orbits
 
-# Simulated data for five orbits (replace with actual simulation outputs)
+# Simulated data for five orbits 
 part6out2_tout = np.linspace(0, tspan2, 500)  # time steps
-E_b_ECI_2 = np.random.rand(500, 3)  # Euler angles (replace with real data)
-q_b_ECI_2 = np.random.rand(500, 4)  # Quaternions (replace with real data)
-w_b_ECI_2 = np.random.rand(500, 3)  # Angular velocities (replace with real data)
-Mc_2 = np.random.rand(500, 3)  # Control moments (replace with real data)
-OMEGA_2 = np.random.rand(500, 3)  # Wheel speeds (replace with real data)
-
+'''E_b_ECI_2 = 
+q_b_ECI_2 = 
+w_b_ECI_2 = 
+Mc_2 =
+Omega_2 =
+'''
 # Body to ECI plots (Five orbits)
 
 plt.figure(65)
